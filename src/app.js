@@ -11,11 +11,15 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }))
 
-app.get('/', (req, res) => {
-    res.status(200).json(`Bem vindo ao nodeJs - porta ${port}`)
-})
+
+const router = require('../src/application/routes/router')
+app.use(router)
+
+// app.get('/', (req, res) => {
+//     res.status(200).json(`Bem vindo ao nodeJs - porta ${port}`)
+// })
 
 app.listen(port, () => {
-    console.log(`app running at http://localhost:${port} - sucess!!`)
+    console.log(`app running at http://localhost:${port} - success!!`)
 })
 
