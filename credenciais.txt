@@ -1,0 +1,6 @@
+mysql://root:rorKaofVhR3NVviPJReI@containers-us-west-82.railway.app:7439/railway
+
+user root
+senha: rorKaofVhR3NVviPJReI
+host: containers-us-west-82.railway.app
+port: 7439
