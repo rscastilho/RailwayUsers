@@ -1,8 +1,8 @@
 const { queryGetAll } = require('../../queries/usersQueries/usersQueries')
 
-exports.getAll = async () => {
+exports.getAll = async (itensPerPage, page) => {
     try {
-        return queryGetAll()
+        return queryGetAll(itensPerPage, page)
     } catch (error) {
         return error
     }
