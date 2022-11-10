@@ -1,4 +1,4 @@
-const { queryGetAll, queryAddUser, queryGetUserById, queryGetUserBycpf, queryCountUsers, queryUpdateUser } = require('../../queries/usersQueries/usersQueries')
+const { queryGetAll, queryAddUser, queryGetUserById, queryGetUserBycpf, queryCountUsers, queryUpdateUser, queryDeleteUser } = require('../../queries/usersQueries/usersQueries')
 
 exports.getAll = async (itensPerPage, page) => {
     try {
@@ -42,6 +42,14 @@ exports.postUser = async (name, lastName, email, password, cpf, createAt) => {
 exports.putUser = async (name, lastName, email, id) => {
     try {
         return queryUpdateUser(name, lastName, email, id)
+    } catch (error) {
+        return error
+    }
+}
+
+exports.deleteUser = async (id) => {
+    try {
+        return queryDeleteUser(id)
     } catch (error) {
         return error
     }

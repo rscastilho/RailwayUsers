@@ -11,10 +11,9 @@ exports.getAllUsers = async (req, res) => {
         const contarRegistros = await _userRepository.getCountUsers()
         let total = ''
         sql.query(contarRegistros.query, (err, data) => {
+            err && res.json({ err })
             total = data[0].quantidade
         })
-
-
 
         const result = await _userRepository.getAll(itensPerPage, page)
         sql.query(result.query, result.fields, (err, data) => {
@@ -64,7 +63,7 @@ exports.postAddUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const id = req.params.id
-        let { name, lastName, email} = req.body;
+        let { name, lastName, email } = req.body;
         const pegarUser = await _userRepository.getUserByid(id);
         sql.query(pegarUser.query, pegarUser.fields, (err, data) => {
             err && res.status(400).json({ 'message': 'erro ao buscar id', err })
@@ -75,20 +74,40 @@ exports.updateUser = async (req, res) => {
                 name ? name : name = data[0].name
                 lastName ? lastName : lastName = data[0].lastName
                 email ? email : email = data[0].email
-
-                _userRepository.putUser(name, lastName, email, id).then((result)=>{
+                _userRepository.putUser(name, lastName, email, id).then((result) => {
                     sql.query(result.query, result.fields, (err, data) => {
                         err && res.status(400).json({ 'message': 'erro ao atualizar usuário', err })
-                        res.status(200).json({ 'message': 'Usuário atualizado com sucesso!', data })
+                        res.status(200).json({ 'message': `Usuário ${name.toUpperCase()} atualizado com sucesso!` })
                         return
                     })
                 })
             }
-
         })
-
     } catch (error) {
         return error
     }
+}
 
+exports.deleteUser = async (req, res) => {
+    try {
+        const id = req.params.id
+        const pegarUserId = await _userRepository.getUserByid(id)
+        sql.query(pegarUserId.query, pegarUserId.fields, (err, data) => {
+            err && res.status(400).json({ 'message': 'erro ao buscar id', err })
+            if (!data.length) {
+                res.status(404).json({ 'message': `Usuário id ${id} não encontrado` })
+                return
+            } else {
+                _userRepository.deleteUser(id).then((result) => {
+                    sql.query(result.query, result.fields, (err, data) => {
+                        err && res.status(400).json({ 'message': 'erro ao tentar deletar usuario', err })
+                        res.status(200).json({ 'message': 'Usuário deletado com sucesso!' })
+                        return
+                    })
+                })
+            }
+        })
+    } catch (error) {
+        return error
+    }
 }

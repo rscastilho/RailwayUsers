@@ -37,3 +37,9 @@ exports.queryUpdateUser = (name, lastName, email, id) => {
     return { query, fields }
 }
 
+exports.queryDeleteUser = (id) => {
+    const query = `DELETE FROM railway.users WHERE ??=?`
+    const fields = ['id', id]
+    return { query, fields }
+}
+
