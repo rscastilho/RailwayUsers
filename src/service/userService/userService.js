@@ -1,24 +1,25 @@
 const _userRepository = require('../../data/repository/userRepository/userRepository')
 const sql = require('../../data/db/db')
-const {hashPassword} = require ('../../crosscutting/hashPassword/hashPassword')
+const { hashPassword } = require('../../crosscutting/hashPassword/hashPassword')
+const e = require('express')
 
 
 exports.getAllUsers = async (req, res) => {
     try {
         const itensPerPage = parseInt(req.query.itensPerPage)
         const page = parseInt(req.query.page)
-        const contarRegistros= await _userRepository.getCountUsers()
-        let total=''
-        sql.query(contarRegistros.query, (err, data)=>{
-            total=data[0].quantidade
+        const contarRegistros = await _userRepository.getCountUsers()
+        let total = ''
+        sql.query(contarRegistros.query, (err, data) => {
+            total = data[0].quantidade
         })
 
 
-                
+
         const result = await _userRepository.getAll(itensPerPage, page)
         sql.query(result.query, result.fields, (err, data) => {
             err && res.json({ err })
-            res.status(200).json({'totalRegistros': total, 'registros': data.length, data })
+            res.status(200).json({ 'totalRegistros': total, 'registros': data.length, data })
         })
     } catch (error) {
         return error
@@ -58,4 +59,36 @@ exports.postAddUser = async (req, res) => {
         res.status(400).json({ "message": error })
         return error
     }
+}
+
+exports.updateUser = async (req, res) => {
+    try {
+        const id = req.params.id
+        let { name, lastName, email} = req.body;
+        const pegarUser = await _userRepository.getUserByid(id);
+        sql.query(pegarUser.query, pegarUser.fields, (err, data) => {
+            err && res.status(400).json({ 'message': 'erro ao buscar id', err })
+            if (!data.length) {
+                res.status(404).json({ 'message': `Usuário id ${id} não encontrado` })
+                return
+            } else {
+                name ? name : name = data[0].name
+                lastName ? lastName : lastName = data[0].lastName
+                email ? email : email = data[0].email
+
+                _userRepository.putUser(name, lastName, email, id).then((result)=>{
+                    sql.query(result.query, result.fields, (err, data) => {
+                        err && res.status(400).json({ 'message': 'erro ao atualizar usuário', err })
+                        res.status(200).json({ 'message': 'Usuário atualizado com sucesso!', data })
+                        return
+                    })
+                })
+            }
+
+        })
+
+    } catch (error) {
+        return error
+    }
+
 }

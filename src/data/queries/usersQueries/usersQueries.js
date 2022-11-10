@@ -24,8 +24,16 @@ exports.queryAddUser = (name, lastName, email, password, cpf, createAt) => {
     return { query, fields }
 }
 
-exports.queryCountUsers = ()=>{
+exports.queryCountUsers = () => {
     const query = `SELECT COUNT(ID) as quantidade FROM railway.users`
-    return {query}
+    return { query }
+}
+
+exports.queryUpdateUser = (name, lastName, email, id) => {
+    const query = `UPDATE railway.users 
+    set ??=?, ??=?, ??=? 
+    where ??= ?`
+    const fields = ['name', name, 'lastName', lastName, 'email', email, 'id', id]
+    return { query, fields }
 }
 

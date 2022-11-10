@@ -16,4 +16,12 @@ const userValidator = () => {
             })
     ]
 }
-module.exports = { userValidator }
+
+const userUpdate = () => {
+    return [
+        body('name').optional(),
+        body('lastName').optional(),
+        body('email').optional().isEmail().withMessage("Informe um email válido")
+    ]
+}
+module.exports = { userValidator, userUpdate }
