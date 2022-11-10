@@ -1,7 +1,6 @@
 const _userRepository = require('../../data/repository/userRepository/userRepository')
 const sql = require('../../data/db/db')
 const { hashPassword } = require('../../crosscutting/hashPassword/hashPassword')
-const e = require('express')
 
 
 exports.getAllUsers = async (req, res) => {
