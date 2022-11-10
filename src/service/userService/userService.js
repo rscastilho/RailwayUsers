@@ -8,7 +8,7 @@ exports.getAllUsers = async (req, res) => {
         const itensPerPage = parseInt(req.query.itensPerPage)
         const page = parseInt(req.query.page)
         let contarRegistros= await _userRepository.getCountUsers()
-        let total=null
+        let total
         sql.query(contarRegistros.query, (err, data)=>{
             return total = data[0].quantidade
         })
