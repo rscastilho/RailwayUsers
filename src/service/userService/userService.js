@@ -7,15 +7,22 @@ exports.getAllUsers = async (req, res) => {
     try {
         const itensPerPage = parseInt(req.query.itensPerPage)
         const page = parseInt(req.query.page)
+        let contarRegistros= await _userRepository.getCountUsers()
+        let total=''
+        sql.query(contarRegistros.query, (err, data)=>{
+            return total = data[0].quantidade
+        })
+                
         const result = await _userRepository.getAll(itensPerPage, page)
         sql.query(result.query, result.fields, (err, data) => {
             err && res.json({ err })
-            res.status(200).json({ 'registros': data.length, data })
+            res.status(200).json({'totalRegistros': total, 'registros': data.length, data })
         })
     } catch (error) {
         return error
     }
 }
+
 
 exports.postAddUser = async (req, res) => {
     try {

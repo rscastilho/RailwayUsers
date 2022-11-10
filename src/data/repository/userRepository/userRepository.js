@@ -1,6 +1,6 @@
-const { queryGetAll, queryAddUser, queryGetUserById, queryGetUserBycpf } = require('../../queries/usersQueries/usersQueries')
+const { queryGetAll, queryAddUser, queryGetUserById, queryGetUserBycpf, queryCountUsers } = require('../../queries/usersQueries/usersQueries')
 
-exports.getAll = async (itensPerPage, page) => {
+exports.getAll = async (itensPerPage = 5, page = 0) => {
     try {
         return queryGetAll(itensPerPage, page)
     } catch (error) {
@@ -18,6 +18,14 @@ exports.getUserByid = async (id) => {
 exports.getUserByCpf = async (cpf) => {
     try {
         return queryGetUserBycpf(cpf)
+    } catch (error) {
+        return error
+    }
+}
+
+exports.getCountUsers = async () => {
+    try {
+        return queryCountUsers()
     } catch (error) {
         return error
     }
