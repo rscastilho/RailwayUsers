@@ -1,6 +1,6 @@
 const { queryGetAll, queryAddUser, queryGetUserById, queryGetUserBycpf, queryCountUsers } = require('../../queries/usersQueries/usersQueries')
 
-exports.getAll = async (itensPerPage = 5, page = 0) => {
+exports.getAll = async (itensPerPage, page) => {
     try {
         return queryGetAll(itensPerPage, page)
     } catch (error) {
