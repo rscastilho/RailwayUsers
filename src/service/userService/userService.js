@@ -35,10 +35,17 @@ exports.postAddUser = async (req, res) => {
         sql.query(pegaUserByCPF.query, pegaUserByCPF.fields, (err, data) => {
             err && res.status(404).json({ 'Erro encontrado': err })
             if (data.length > 0) {
-                if (data[0].cpf === cpf) {
-                    res.status(400).json({ "message": "CPF já cadastrado" }).end()
+
+                if (data[0].email.toLowerCase().trim() === email.toLowerCase().trim()) {
+                    res.status(400).json({ 'message': "email já existe" })
                     return
                 }
+                 if (data[0].cpf === cpf) {
+                     res.status(400).json({ "message": "CPF já cadastrado" })
+                     return
+                } 
+                
+
             } else {
                 _userRepository.postUser(name, lastName, email, passwordHash, cpf, createAt).then((result) => {
                     sql.query(result.query, result.fields, (err, data) => {
