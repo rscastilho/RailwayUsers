@@ -20,8 +20,8 @@ router.get('/api', (req, res) => {
         const links = {
             "home":"https://railwayusers-production.up.railway.app/api",
             "login": "https://railwayusers-production.up.railway.app/api/login (método POST)",
-            "login": "https://railwayusers-production.up.railway.app/api/login (método POST)",
             "register": "https://railwayusers-production.up.railway.app/api/users (método POST)",
+            "auth": "https://railwayusers-production.up.railway.app/api/login/auth (método Get, com acesso após login e envio de token válido)",
             "getAll": "https://railwayusers-production.up.railway.app/api/users?itensPerPage=XXX&page=XXX (Definir numero de itens e pagina para paginação)"
         }
         const autor = {
@@ -29,7 +29,7 @@ router.get('/api', (req, res) => {
             "contato": "rcastilho@gmail.com",
             "org": "CastWebDevelopments"
         }
-        res.status(200).json({ 'message': 'Seja bem vindo. Algumas informações sobre o sistema', links, autor })
+        res.status(200).json({ 'message': 'Seja bem vindo. Informações sobre o sistema', links, autor })
     } catch (error) {
         return error
 

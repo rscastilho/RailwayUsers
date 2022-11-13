@@ -38,3 +38,11 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.getAuth = async (req, res)=>{
+    try {
+        res.status(200).json({"message":"Parabéns. Login realizado com sucesso!"})
+    } catch (error) {
+        return error
+    }
+}
+

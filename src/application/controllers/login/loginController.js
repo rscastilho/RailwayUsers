@@ -8,5 +8,6 @@ const authUser = require('../../../crosscutting/auth/authUsers')
 
 
 router.post('/', loginValidator(), validator, _loginService.login)
+router.get('/auth', authUser, _loginService.getAuth)
 
 module.exports = router
