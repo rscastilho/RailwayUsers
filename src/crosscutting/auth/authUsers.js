@@ -5,9 +5,9 @@ const sql = require('../../data/db/db')
 const authUser = async (req, res, next) => {
     try {
         const carregaToken = req.headers.authorization
-        const token = carregaToken.split(' ')[1] || ''
+        const token = carregaToken ? carregaToken.split(' ')[1] : ''
         if (!token) {
-            res.status(400).json({ 'message': 'não autorizado' })
+            res.status(400).json({ 'message': 'Não autorizado. Realize o login para ter acesso' })
             return
         } else {
             const validaToken = jwt.verify(token, process.env.JWT_SECRET)
@@ -23,7 +23,7 @@ const authUser = async (req, res, next) => {
             })
         }
     } catch (error) {
-        res.status(400).json({ 'message': 'token inválido' })
+        res.status(400).json({ 'message': 'token inválido', 'erro': error.message })
         return error
     }
 }

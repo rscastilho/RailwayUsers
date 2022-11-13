@@ -18,7 +18,6 @@ exports.login = async (req, res) => {
                 res.status(400).json({ 'message': 'Usuário não encontrado' })
                 return
             }
-
             validaSenha = bcrypt.compareSync(password, data[0].password)
             if (validaSenha) {
                 delete data[0].password
@@ -33,12 +32,7 @@ exports.login = async (req, res) => {
                 res.status(400).json({ 'message': 'Senha incorreta' })
                 return
             }
-
-
-
         })
-
-
     } catch (error) {
         return error
     }
