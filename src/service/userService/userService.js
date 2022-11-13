@@ -1,6 +1,7 @@
 const _userRepository = require('../../data/repository/userRepository/userRepository')
 const sql = require('../../data/db/db')
 const { hashPassword } = require('../../crosscutting/hashPassword/hashPassword')
+const {validarCPF} = require('../../crosscutting/cpfValidator/cpfValidator')
 
 
 exports.getAllUsers = async (req, res) => {
@@ -31,6 +32,13 @@ exports.postAddUser = async (req, res) => {
         const pegaUserByCPF = await _userRepository.getUserByCpf(cpf)
         const createAt = new Date();
         const passwordHash = await hashPassword(password)
+
+        const validaCpf = validarCPF(cpf)
+        if(!validaCpf){
+            res.status(400).json({'message':'Digite um CPF válido!'})
+            return
+        }
+
 
         sql.query(pegaUserByCPF.query, pegaUserByCPF.fields, (err, data) => {
             err && res.status(404).json({ 'Erro encontrado': err })
