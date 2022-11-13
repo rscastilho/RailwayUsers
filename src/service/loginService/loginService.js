@@ -18,9 +18,15 @@ exports.login = async (req, res) => {
                 res.status(400).json({ 'message': 'Usuário não encontrado' })
                 return
             }
+
             validaSenha = bcrypt.compareSync(password, data[0].password)
             if (validaSenha) {
-                token = jwt.sign(` {id: ${data[0].id}, name: ${data[0].name}, email: ${data[0].email}}`, jwtSecret)
+                delete data[0].password
+                delete data[0].lastName
+                delete data[0].cpf
+                delete data[0].createAt
+                delete data[0].lastAccess
+                token = jwt.sign({data}, jwtSecret, { expiresIn: 60 * 60 })
                 res.status(200).json({ 'message': 'Usuário logado com sucesso!', data, token })
                 return
             } else {
@@ -33,6 +39,14 @@ exports.login = async (req, res) => {
         })
 
 
+    } catch (error) {
+        return error
+    }
+}
+
+exports.getValidarAuth = async (req, res) => {
+    try {
+        res.status(200).json({ 'message': 'usuario autenticado' })
     } catch (error) {
         return error
     }

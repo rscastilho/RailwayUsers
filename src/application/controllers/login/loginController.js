@@ -3,8 +3,11 @@ const router = express.Router()
 const _loginService = require('../../../service/loginService/loginService')
 const validator = require('../../../crosscutting/validator/validator')
 const { loginValidator } = require('../../../crosscutting/validator/loginValidator')
+const authUser = require('../../../crosscutting/auth/authUsers')
+
 
 
 router.post('/', loginValidator(), validator, _loginService.login)
+router.get('/home', authUser, _loginService.getValidarAuth)
 
 module.exports = router
