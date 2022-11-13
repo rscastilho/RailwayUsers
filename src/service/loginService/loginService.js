@@ -38,10 +38,3 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.getValidarAuth = async (req, res) => {
-    try {
-        res.status(200).json({ 'message': 'usuario autenticado' })
-    } catch (error) {
-        return error
-    }
-}
