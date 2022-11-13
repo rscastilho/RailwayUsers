@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
                 delete data[0].createAt
                 delete data[0].lastAccess
                 token = jwt.sign({data}, jwtSecret, { expiresIn: 60 * 60 })
-                res.status(200).json({ 'message': 'Usuário logado com sucesso!', data, token })
+                res.status(200).json({ 'message': `${data[0].name} seja bem vindo. Login realizado com sucesso!`, data, token })
                 return
             } else {
                 res.status(400).json({ 'message': 'Senha incorreta' })
