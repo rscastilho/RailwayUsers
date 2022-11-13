@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
             }
             validaSenha = bcrypt.compareSync(password, data[0].password)
             if (validaSenha) {
-                token = jwt.sign(` {${data[0].id}, ${data[0].name}, ${data[0].email}}`, jwtSecret)
+                token = jwt.sign(` {id: ${data[0].id}, name: ${data[0].name}, email: ${data[0].email}}`, jwtSecret)
                 res.status(200).json({ 'message': 'Usuário logado com sucesso!', data, token })
                 return
             } else {
