@@ -44,8 +44,6 @@ exports.postAddUser = async (req, res) => {
                      res.status(400).json({ "message": "CPF já cadastrado" })
                      return
                 } 
-                
-
             } else {
                 _userRepository.postUser(name, lastName, email, passwordHash, cpf, createAt).then((result) => {
                     sql.query(result.query, result.fields, (err, data) => {
