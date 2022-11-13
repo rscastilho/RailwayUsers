@@ -12,7 +12,7 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }))
 
-const router = require('../src/application/routes/router')
+const router = require('./src/application/routes/router')
 app.use(router)
 
 router.get('/api', (req, res) => {
