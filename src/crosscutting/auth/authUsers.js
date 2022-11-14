@@ -7,7 +7,7 @@ const authUser = async (req, res, next) => {
         const carregaToken = req.headers.authorization
         const token = carregaToken ? carregaToken.split(' ')[1] : ''
         if (!token) {
-            res.status(400).json({ 'message': 'Não autorizado. Realize o login para ter acesso' })
+            res.status(400).json({ 'message': 'Não autorizado. Realize o login para acessar esta página' })
             return
         } else {
             const validaToken = jwt.verify(token, process.env.JWT_SECRET)
