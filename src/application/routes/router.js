@@ -4,10 +4,6 @@ const router = express.Router()
 router.use('/api/users', require('../controllers/users/usersController'))
 router.use('/api/login', require('../controllers/login/loginController'))
 
- router.get('*', (req, res)=>{
-    res.status(404).json({ "message": "Erro 404. Página não encontrada" })
- })
-
 
 
 router.get('/api',  (req, res) => {
