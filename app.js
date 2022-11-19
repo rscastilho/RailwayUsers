@@ -9,7 +9,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin:'https://usersauth-react.vercel.app/'
+    
+    // origin: 'http://localhost:3000'
 }))
 
 const router = require('./src/application/routes/router')
