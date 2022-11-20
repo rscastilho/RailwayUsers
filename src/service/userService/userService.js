@@ -39,7 +39,6 @@ exports.postAddUser = async (req, res) => {
             return
         }
 
-
         sql.query(pegaUserByCPF.query, pegaUserByCPF.fields, (err, data) => {
             err && res.status(404).json({ 'Erro encontrado': err })
             if (data.length > 0) {

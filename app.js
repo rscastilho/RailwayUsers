@@ -9,8 +9,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //libera cors para todos sem limitações
-
 app.use(cors())
+
 //cor apenas para localhost
 // app.use(cors({
 //     credentials: true,
