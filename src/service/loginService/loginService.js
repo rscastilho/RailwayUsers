@@ -14,7 +14,7 @@ exports.login = async (req, res) => {
         const result = await _loginRepository.getUserByEmail(email.trim().toLowerCase());
         sql.query(result.query, result.fields, (err, data) => {
             err && res.status(400).json({ 'message': 'erro', err })
-            if (!data.length) {
+            if (!data) {
                 res.status(400).json({ 'message': 'Usuário não encontrado' })
                 return
             }
